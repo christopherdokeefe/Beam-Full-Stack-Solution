@@ -7,9 +7,9 @@
    
    <title>Landing Page</title>
    <!-- <link rel="stylesheet" href="style.css"> -->
-   <body onload="fetchMarsImages()">
+   <body onload="onLoad()">
       <input type="date" id="date-input" name="Date">
-      <button onclick="fetchMarsImages()">Query</button>
+      <button onclick="queryNewDate()">Query</button>
       <p id="console">output: </p>
 
       <div class="image-slide-container">
@@ -23,6 +23,6 @@
       <button id="nextButton">Next</button>
    </body>
 
-   <script src="script.js"></script>
+   <script src="nasaAPIQuery.js"></script>
 
 </html>
