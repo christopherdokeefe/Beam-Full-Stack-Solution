@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+
+<html>
+   <head>
+   </head>
+
+   
+   <title>Landing Page</title>
+   <!-- <link rel="stylesheet" href="style.css"> -->
+   <body onload="fetchMarsImages()">
+      <input type="date" id="date-input" name="Date">
+      <button onclick="fetchMarsImages()">Query</button>
+      <p id="console">output: </p>
+
+      <div class="image-slide-container">
+         <div class="image-slide">
+            <img id="slide-img">
+
+         </div>
+      </div>
+
+      <button id="prevButton">Prev</button>
+      <button id="nextButton">Next</button>
+   </body>
+
+   <script src="script.js"></script>
+
+</html>
