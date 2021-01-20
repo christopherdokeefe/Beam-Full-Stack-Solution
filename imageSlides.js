@@ -1,15 +1,21 @@
-let photos;
-let current;
+/*Query JSON Structure
+   photos:
+      id: unsigned int
+      sol: unsigned int
+      camera { id, name, rover_id, full_name }
+      img_src: url
+      earth_date: date (YYYY-MM-DD)
+      rover { id, name, landing_date, launch_date, status }
+   
+*/
 
-function addPhotos(jsonObj) {
-   if (photos.length == 0) {
-      displayPhotos(jsonObj)
-   }
-   else {
+// Array of photos that was returned by the NASA API
+let photos = [];
 
-   }
-}
+// The index of the current photo being displayed
+let current = 0;
 
+// Clears the current photos and sets all the UI elements to their default values.
 function clearPhotos() {
    photos = [];
    current = 0;
@@ -20,12 +26,7 @@ function clearPhotos() {
    document.getElementById("error-message").innerHTML = "Loading Images...";
 }
 
-function noPhotosFound(date) {
-   if (photos.length == 0) {
-      document.getElementById("error-message").innerHTML = "No photos found for " + date;
-   }
-}
-
+// Adds the photos gathered from the NASA API and displays the first picture.
 function displayPhotos(jsonObj) {  
    // Clear the error message 
    document.getElementById("error-message").innerHTML = ""; 
@@ -36,13 +37,19 @@ function displayPhotos(jsonObj) {
       current = 0;
    }
    else {
-      addPhotos(jsonObj);
+      photos = photos.concat(jsonObj.photos);
    }
-   document.getElementById("slide-img").src = (photos[0].img_src);
-   document.getElementById("numbertext").innerHTML = "1 / " + photos.length;
-   document.getElementById("caption").innerHTML = photos[0].rover.name + " - " + photos[0].earth_date;
+   displayData(0);
 }
 
+// Event for when no photos are returned for a user specified date.
+function noPhotosFound(date) {
+   if (photos.length == 0) {
+      document.getElementById("error-message").innerHTML = "No photos found for " + date;
+   }
+}
+
+// Slide show button method.
 function prevPhoto() {
    if (photos == null) {
       document.getElementById("console").innerHTML += "<br> Photos is empty";
@@ -55,10 +62,10 @@ function prevPhoto() {
    }
    
    current = prev;
-   document.getElementById("slide-img").src = (photos[prev].img_src);
-   document.getElementById("numbertext").innerHTML = (current + 1) + " / " + photos.length;
+   displayData(current);
 }
 
+// Slide show button method.
 function nextPhoto() {
    if (photos == null) {
       document.getElementById("console").innerHTML += "<br> Photos is empty";
@@ -70,6 +77,12 @@ function nextPhoto() {
       next = 0;
    }
    current = next;
-   document.getElementById("slide-img").src = (photos[next].img_src);
+   displayData(current);
+}
+
+// Takes the index of the current picture displayed and outputs the data to the UI elements.
+function displayData(current) {
+   document.getElementById("slide-img").src = (photos[current].img_src);
    document.getElementById("numbertext").innerHTML = (current + 1) + " / " + photos.length;
+   document.getElementById("caption").innerHTML = photos[current].rover.name + " - " + photos[current].earth_date;
 }
