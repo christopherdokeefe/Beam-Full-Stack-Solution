@@ -1,23 +1,26 @@
-// const imageSlide = document.querySelector('.image-slide');
-// const images = doceument.querySelectorAll('.carousel-slide img')
-
-// // Buttons 
-// const prevButton = document.getElementById("prevButton");
-// const nextButton = document.getElementById("nextButton");
-
-// // Counter 
-// let counter = 1;
-// const size = carouselImages[0].clientWidth;
-
-// carouselSlide.style.transform = ''
-
 let photos;
 let current;
+
+function addPhotos(jsonObj) {
+   if (photos == null) {
+      displayPhotos(jsonObj)
+   }
+   else {
+      photos += 
+   }
+}
+
+function clearPhotos() {
+   delete photos;
+   current = 0;
+}
 
 function displayPhotos(jsonObj) {   
    photos = jsonObj.photos;
    current = 0;
    document.getElementById("slide-img").src = (photos[0].img_src);
+   document.getElementById("numbertext").innerHTML = "1 / " + photos.length;
+   document.getElementById("caption").innerHTML = photos[0].rover.name + " - " + photos[0].earth_date;
 }
 
 function prevPhoto() {
@@ -30,10 +33,10 @@ function prevPhoto() {
    if (prev < 0) {
       prev = photos.length - 1;
    }
-
-   document.getElementById("console").innerHTML += "<br>prev = " + prev;
+   
    current = prev;
    document.getElementById("slide-img").src = (photos[prev].img_src);
+   document.getElementById("numbertext").innerHTML = (current + 1) + " / " + photos.length;
 }
 
 function nextPhoto() {
@@ -48,4 +51,5 @@ function nextPhoto() {
    }
    current = next;
    document.getElementById("slide-img").src = (photos[next].img_src);
+   document.getElementById("numbertext").innerHTML = (current + 1) + " / " + photos.length;
 }
