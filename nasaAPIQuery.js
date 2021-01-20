@@ -77,6 +77,7 @@ function fetchMarsImagesSynchronous(date) {
 
 // Constructs URLs for each NASA rover to fetch data from the specific date. Uses asynchronous HTTP requests since the result of the queries aren't needed. 
 function fetchMarsImagesAsynchronous(date) {
+   clearPhotos();
    for (var i = 0; i < rovers.length; i++) {
       var url = "https://api.nasa.gov/mars-photos/api/v1/rovers/" + rovers[i] + "/photos?earth_date=" + date.toString() + "&api_key=" + privateKey;
       var xmlhttp = new XMLHttpRequest();
@@ -96,7 +97,6 @@ function fetchMarsImagesAsynchronous(date) {
          }
       };
 
-      // Send HTTP request that 
       xmlhttp.open("GET", url, true);
       xmlhttp.send();
    }

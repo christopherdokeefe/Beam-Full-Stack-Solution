@@ -2,22 +2,42 @@ let photos;
 let current;
 
 function addPhotos(jsonObj) {
-   if (photos == null) {
+   if (photos.length == 0) {
       displayPhotos(jsonObj)
    }
    else {
-      photos += 
+
    }
 }
 
 function clearPhotos() {
-   delete photos;
+   photos = [];
    current = 0;
+
+   document.getElementById("slide-img").src = "Images/Error-Photo.jpg";
+   document.getElementById("numbertext").innerHTML = "";
+   document.getElementById("caption").innerHTML = "";
+   document.getElementById("error-message").innerHTML = "Loading Images...";
 }
 
-function displayPhotos(jsonObj) {   
-   photos = jsonObj.photos;
-   current = 0;
+function noPhotosFound(date) {
+   if (photos.length == 0) {
+      document.getElementById("error-message").innerHTML = "No photos found for " + date;
+   }
+}
+
+function displayPhotos(jsonObj) {  
+   // Clear the error message 
+   document.getElementById("error-message").innerHTML = ""; 
+
+   // Determine whether to replace the photos object or concat 
+   if (photos == null || photos.length == 0) {
+      photos = jsonObj.photos;
+      current = 0;
+   }
+   else {
+      addPhotos(jsonObj);
+   }
    document.getElementById("slide-img").src = (photos[0].img_src);
    document.getElementById("numbertext").innerHTML = "1 / " + photos.length;
    document.getElementById("caption").innerHTML = photos[0].rover.name + " - " + photos[0].earth_date;
