@@ -7,7 +7,6 @@ let rovers = ["curiosity", "opportunity", "spirit"];
 // Function called onLoad of body of index.html. Uses a timeout so that all web elements load before 
 // querying the NASA API for the most recent date.
 function onLoad() {
-   document.getElementById("console").innerHTML += "onloading";
    setTimeout(function(){
       getMostRecentDate();
      }, 500);
@@ -22,14 +21,11 @@ function getMostRecentDate() {
    // Need to reformat how the date is displayed so it can be deciphered by the NASA API.
    var formattedDate = convertDateFormat(date);  
 
-   document.getElementById("console").innerHTML += "<br>" + formattedDate;
-
    // Iterate backwards from today's date until a date with results is reached.
    // fetchMarsImagesSynchronous returns number of pictures taken from that date or -1 for a bad http request.
    while (fetchMarsImagesSynchronous(formattedDate, rovers[0]) == 0) {
       date.setDate(date.getDate() - 1);
       formattedDate = convertDateFormat(date);
-      document.getElementById("console").innerHTML += "<br>date " + formattedDate;
    }
 }
 
@@ -47,7 +43,6 @@ function queryNewDate() {
 
    var numOfPhotos = 0;
    for (var i = 0; i < rovers.length; i++) {
-      document.getElementById("console").innerHTML += "<br> date and rover " + date + " " + rovers[i];
       numOfPhotos += fetchMarsImagesSynchronous(date, rovers[i]);
    }
 
@@ -62,8 +57,6 @@ function fetchMarsImagesSynchronous(date, rover) {
    var url = "https://api.nasa.gov/mars-photos/api/v1/rovers/" + rover + "/photos?earth_date=" + date.toString() + "&api_key=" + privateKey;
    var xmlhttp = new XMLHttpRequest();
 
-   document.getElementById("console").innerHTML += "<br>" + url;
-
    // Send HTTP request that waits for response.
    xmlhttp.open("GET", url, false);
    xmlhttp.send();
@@ -71,14 +64,11 @@ function fetchMarsImagesSynchronous(date, rover) {
    if (xmlhttp.status == 200) {
       var jsonObj = JSON.parse(xmlhttp.responseText);
       if (jsonObj.photos.length > 0) {
-         document.getElementById("console").innerHTML += "<br>Num of pics " + jsonObj.photos.length;
          displayPhotos(jsonObj);
          return jsonObj.photos.length;
       }
-      document.getElementById("console").innerHTML += "<br> no photos";
       return 0;
    }
-   document.getElementById("console").innerHTML += "<br> bad http request" + xmlhttp.status;
    return -1;
 }
 

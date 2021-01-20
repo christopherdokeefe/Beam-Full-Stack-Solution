@@ -51,10 +51,7 @@ function noPhotosFound(date) {
 
 // Slide show button method.
 function prevPhoto() {
-   if (photos == null) {
-      document.getElementById("console").innerHTML += "<br> Photos is empty";
-      return;
-   }
+   if (photos == null) return;
 
    var prev = current - 1;
    if (prev < 0) {
@@ -67,10 +64,7 @@ function prevPhoto() {
 
 // Slide show button method.
 function nextPhoto() {
-   if (photos == null) {
-      document.getElementById("console").innerHTML += "<br> Photos is empty";
-      return;
-   }
+   if (photos == null) return;
 
    var next = current + 1;
    if (next >= photos.length) {
