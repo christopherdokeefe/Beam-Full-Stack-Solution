@@ -13,7 +13,7 @@
    background-image: url(Images/starry-sky.jpg);
 }
 
-.overlay{
+.overlay {
    z-index: 0;
    width: 0;
    height: 0;
@@ -27,7 +27,7 @@
 }
 
 /* Header */
-nav{
+nav {
    width: 80%;
    position: sticky;
    margin: 20px auto;
@@ -35,26 +35,26 @@ nav{
    display: flex;
    align-items: center;
 }
-
-.logo img{
+ 
+.logo img {
    margin-left: -10%;
    padding: 10px;
    height: 100px;
    float: left;
 }
 
-.nav-links{
+.nav-links {
    flex: 1;
    text-align: right;
 }
 
-.nav-links ul li{
+.nav-links ul li {
    list-style: none;
    display: inline-block;
    margin: 0 20px;
 }
 
-.nav-links ul li a{
+.nav-links ul li a {
    color: white;
    text-decoration: none;
 }

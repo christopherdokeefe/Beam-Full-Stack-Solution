@@ -9,7 +9,7 @@ let rovers = ["curiosity", "opportunity", "spirit"];
 function onLoad() {
    setTimeout(function(){
       getMostRecentDate();
-     }, 10);
+     }, 500);
 }
 
 // Used when the website is first loaded. This method is responsible for fetching the last date that rover pictures are 
