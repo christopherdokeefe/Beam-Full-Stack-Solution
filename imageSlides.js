@@ -9,7 +9,7 @@
    
 */
 
-// Array of photos that was returned by the NASA API
+// Array of photos stored from the NASA API 
 let photos = [];
 
 // The index of the current photo being displayed
@@ -39,7 +39,34 @@ function displayPhotos(jsonObj) {
    else {
       photos = photos.concat(jsonObj.photos);
    }
+
    displayData(0);
+   fadeAnimation();
+
+   setTimeout(function() {
+      preloadImages(jsonObj.photos)
+   }, 100 );
+}
+
+// Loads recently fetched photos into browser's cache for faster retrival.
+function preloadImages(photosToLoad) {
+   if (!preloadImages.list) {
+       preloadImages.list = [];
+   }
+   var list = preloadImages.list;
+   for (var i = 0; i < photosToLoad.length; i++) {
+       var img = new Image();
+       img.onload = function() {
+           var index = list.indexOf(this);
+           if (index !== -1) {
+               // remove image from the array once it's loaded
+               // for memory consumption reasons
+               list.splice(index, 1);
+           }
+       }
+       list.push(img);
+       img.src = photosToLoad[i].img_src;
+   }
 }
 
 // Event for when no photos are returned for a user specified date.
@@ -49,7 +76,7 @@ function noPhotosFound(date) {
    }
 }
 
-// Slide show button method.
+// Slide show previous button.
 function prevPhoto() {
    if (photos == null) return;
 
@@ -60,9 +87,10 @@ function prevPhoto() {
    
    current = prev;
    displayData(current);
+   fadeAnimation();
 }
 
-// Slide show button method.
+// Slide show next button.
 function nextPhoto() {
    if (photos == null) return;
 
@@ -72,6 +100,7 @@ function nextPhoto() {
    }
    current = next;
    displayData(current);
+   fadeAnimation();
 }
 
 // Takes the index of the current picture displayed and outputs the data to the UI elements.
@@ -79,4 +108,16 @@ function displayData(current) {
    document.getElementById("slide-img").src = (photos[current].img_src);
    document.getElementById("numbertext").innerHTML = (current + 1) + " / " + photos.length;
    document.getElementById("caption").innerHTML = photos[current].rover.name + " - " + photos[current].earth_date;
+}
+
+// Triggers the fade animation
+function fadeAnimation() {
+   var image = document.getElementsByClassName("image-slide")[0];
+
+   image.classList.remove('fade');
+
+   // Must set timeout or the animation doesn't trigger
+   setTimeout(function(){
+      image.classList.add('fade');  
+   }, 50);
 }

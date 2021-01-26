@@ -1,7 +1,7 @@
-// Need to remove private key from this file
-let privateKey = "2b1zn2ziGqMUl8yFBVuSCIN6Ev98Bh52PPrKelXB";
+// API key should be placed in a proxy server for actual web service.
+const privateKey = "2b1zn2ziGqMUl8yFBVuSCIN6Ev98Bh52PPrKelXB";
 
-// Rover names used to query all photos from Nasa API
+// Rover names used to query all photos from Nasa API.
 let rovers = ["curiosity", "opportunity", "spirit"];
 
 // Function called onLoad of body of index.html. Uses a timeout so that all web elements load before 
@@ -9,7 +9,7 @@ let rovers = ["curiosity", "opportunity", "spirit"];
 function onLoad() {
    setTimeout(function(){
       getMostRecentDate();
-     }, 500);
+     }, 10);
 }
 
 // Used when the website is first loaded. This method is responsible for fetching the last date that rover pictures are 
@@ -36,12 +36,12 @@ function queryNewDate() {
       return;
    } 
 
-   // Clear the current set of photos.
    clearPhotos();
 
    var date = document.getElementById("date-input").value;
-
    var numOfPhotos = 0;
+
+   // Get data for all three rovers.
    for (var i = 0; i < rovers.length; i++) {
       numOfPhotos += fetchMarsImagesSynchronous(date, rovers[i]);
    }
